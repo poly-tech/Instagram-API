@@ -9,6 +9,9 @@ class GetInstagramProfile():
         self.followers = []
         self.following = []
 
+    def download_users_profile_picture(self, username):
+        self.L.download_profile(username, profile_pic_only=True)
+
 
 
     def get_basic_data(self, username):
@@ -50,17 +53,21 @@ class GetInstagramProfile():
 
 cls = GetInstagramProfile()
 
-@app.route('/username=<username>,password=<password>,id=<id>')
+# @app.route('/username=<username>,password=<password>,id=<id>')
+@app.route('/<username>')
 
-def get_basic_info(username, id, password):
+def get_basic_info(username):
+    # All comments under this function are still in testing
+
     # return jsonify({'username':username, 'id':id, 'password':password})
 
-
+    # cls.download_users_profile_picture(username)
     responce = cls.get_basic_data(username)
 
-    if not (id == '' or username == ''):
-        responce['followers'] = cls.get_users_followers(username, id, password)
-        responce['following'] = cls.get_users_followings(username, id, password)
+
+    # if not (id == '' or username == ''):
+    #     responce['followers'] = cls.get_users_followers(username, id, password)
+    #     responce['following'] = cls.get_users_followings(username, id, password)
 
     return jsonify(responce), 200
 
